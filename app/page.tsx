@@ -18,26 +18,26 @@ export default function Home() {
   return (
     <main>
       {/* Blog Header & Title */}
-      <header className="mb-10 container">
+      <header className="mb-8 md:mb-10 container">
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl">
           Latest Posts
         </h1>
         <p className="mt-4 text-xl">
-          I share about my new learnings, project based technical writings,
-          advices and life updates.
+          Deep dives into new learnings, technical projects, and the occasional
+          life update.
         </p>
       </header>
 
       {/* Post List */}
-      <section className="bg-background py-10">
-        <div className="container border-b border-dashed border-foreground/10 mb-5 pb-5">
+      <section className="bg-background pt-5 pb-10">
+        <div className="container">
           <Categories categories={mockCategories} />
-        </div>
-
-        <div className="container grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6">
-          {posts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
+          <hr className="border-dashed my-5" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-4 gap-y-6">
+            {posts.map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
+          </div>
         </div>
       </section>
     </main>

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export function Categories({ categories }: { categories: Category[] }) {
   return (
-    <ul className="text-[0.7rem] uppercase flex gap-2 flex-wrap">
+    <ul className="text-xs uppercase flex gap-2 flex-wrap">
       {categories.map((category: Category) => (
         <li key={category.id} className="flex shrink-0">
           <Link
