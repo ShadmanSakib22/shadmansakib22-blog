@@ -1,44 +1,57 @@
-import { Post, Category } from "@/lib/types";
-import { mockPostList } from "@/lib/mock-data";
-import PostCard from "@/components/post-card";
+import { Category } from "@/lib/types";
 import { Categories } from "@/components/categories";
+import { InfinitePostList } from "@/components/infinite-post-list";
+import { getCategories, getAllPosts } from "@/lib/queries";
 
-// Mock Category Data for the navigation bar
-const mockCategories: Category[] = [
-  { id: "all", name: "All Posts", slug: "" },
-  { id: "dev", name: "Next.js Development", slug: "nextjs-dev" },
-  { id: "frontend", name: "Frontend", slug: "frontend" },
-  { id: "seo", name: "SEO Strategy", slug: "seo-strategy" },
-  { id: "tech", name: "Technology Trends", slug: "tech" },
-];
+interface HomeProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
 
-const posts: Post[] = mockPostList;
+export default async function Home({ searchParams }: HomeProps) {
+  const params = await searchParams;
+  const category =
+    typeof params.category === "string" ? params.category : undefined;
+  const searchTerm =
+    typeof params.search === "string" ? params.search : undefined;
 
-export default function Home() {
+  const CategoriesList: Category[] = await getCategories();
+  const { posts, pageInfo } = await getAllPosts(
+    8,
+    undefined,
+    category,
+    searchTerm
+  );
+
   return (
     <main>
       {/* Blog Header & Title */}
-      <header className="mb-8 md:mb-10 container">
-        <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl">
-          Latest Posts
-        </h1>
-        <p className="mt-4 text-xl">
-          Deep dives into new learnings, technical projects, and the occasional
-          life update.
-        </p>
+      <header className="py-8 md:py-10 bg-input/5 bg-grid-dashed">
+        <div className="container">
+          <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl capitalize">
+            {category
+              ? `Category: ${category.replace("-", " ")}`
+              : searchTerm
+              ? `Search: ${searchTerm}`
+              : "Latest Posts"}
+          </h1>
+          <p className="mt-4 text-xl max-w-3xl">
+            In this blog I share about; my various technical projects, new
+            learnings and tips, personal life updates and other mislaneous stuff
+            I find interesting.
+          </p>
+        </div>
       </header>
 
       {/* Post List */}
-      <section className="bg-background pt-5 pb-10">
-        <div className="container">
-          <Categories categories={mockCategories} />
-          <hr className="border-dashed my-5" />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-4 gap-y-6">
-            {posts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
-        </div>
+      <section className="container pt-5 pb-10">
+        <Categories categories={CategoriesList} />
+        <hr className="border-dashed my-5" />
+        <InfinitePostList
+          initialPosts={posts}
+          initialPageInfo={pageInfo}
+          category={category}
+          searchTerm={searchTerm}
+        />
       </section>
     </main>
   );
