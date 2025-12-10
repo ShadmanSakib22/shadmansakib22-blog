@@ -44,7 +44,12 @@ export function InfinitePostList({
           : undefined,
     });
 
-  const posts = data?.pages.flatMap((page) => page.posts) || [];
+  const posts =
+    data?.pages
+      .flatMap((page) => page.posts)
+      .filter(
+        (post, index, self) => self.findIndex((p) => p.id === post.id) === index
+      ) || [];
   const pageInfo = data?.pages[data.pages.length - 1]?.pageInfo;
 
   const loadMore = useCallback(async () => {
@@ -86,7 +91,7 @@ export function InfinitePostList({
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-4 gap-y-6 mb-4">
           {posts.map((post) => (
-            <PostCard key={post.slug} post={post} />
+            <PostCard key={post.id} post={post} />
           ))}
         </div>
       )}
