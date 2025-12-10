@@ -148,17 +148,6 @@ export async function getPost(slug: string): Promise<Post | null> {
             }
           }
         }
-        seo {
-          title
-          metaDesc
-          canonical
-          fullHead
-          opengraphImage {
-            sourceUrl
-          }
-          opengraphTitle
-          twitterTitle
-        }
       }
     }
   `;
