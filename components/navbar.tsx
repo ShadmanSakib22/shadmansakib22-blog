@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { useState } from "react";
 import ThemeToggler from "@/components/theme-toggler";
 import { Button } from "@/components/ui/button";

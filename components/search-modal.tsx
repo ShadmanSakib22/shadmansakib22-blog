@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import {
   Dialog,
   DialogContent,
@@ -27,6 +27,7 @@ export function SearchModal({ children }: SearchModalProps) {
     e.preventDefault();
     if (searchTerm.trim()) {
       router.push(`/?search=${encodeURIComponent(searchTerm.trim())}`);
+      setIsOpen(false);
     }
   };
 
