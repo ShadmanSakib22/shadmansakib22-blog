@@ -6,7 +6,6 @@ import { getPost } from "@/lib/queries";
 import { Post } from "@/lib/types";
 import { formatPostDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
 interface PageProps {
@@ -55,7 +54,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <main className="bg-input/5 bg-grid-dashed">
-      <article className="container max-w-7xl bg-card border-x py-10">
+      <article className="container max-w-5xl bg-card border-x py-10">
         {/* Post Header */}
         <header className="mb-8">
           <div className="flex flex-wrap items-center gap-4 text-muted-foreground mb-4">
@@ -113,7 +112,7 @@ export default async function Page({ params }: PageProps) {
 
         {/* Post Content */}
         <div
-          className="prose prose-lg max-w-none"
+          className="prose md:prose-lg lg:prose-xl prose-neutral dark:prose-invert max-w-none"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
       </article>
