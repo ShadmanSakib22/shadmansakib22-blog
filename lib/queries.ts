@@ -101,6 +101,7 @@ export async function getAllPosts(
           endCursor
           hasNextPage
           hasPreviousPage
+
         }
       }
     }
@@ -116,40 +117,48 @@ export async function getAllPosts(
 export async function getPost(slug: string): Promise<Post | null> {
   const query = `
     query GetPost($slug: ID!) {
-      post(id: $slug, idType: SLUG) {
-        id
-        title
-        slug
-        date
-        excerpt
-        content
-        categories {
-          nodes {
-            id
-            name
-            slug
-          }
+    post(id: $slug, idType: SLUG) {
+      id
+      title
+      slug
+      date
+      excerpt
+      content
+      categories {
+        nodes {
+          id
+          name
+          slug
         }
-        tags {
-          nodes {
-            id
-            name
-            slug
-          }
+      }
+      tags {
+        nodes {
+          id
+          name
+          slug
         }
-        featuredImage {
-          node {
-            uri
-            sourceUrl
-            altText
-            mediaDetails {
-              height
-              width
-            }
+      }
+      featuredImage {
+        node {
+          uri
+          sourceUrl
+          altText
+          mediaDetails {
+            height
+            width
           }
         }
       }
+      seo {
+        title
+        metaDesc
+        opengraphDescription
+        opengraphImage {
+          sourceUrl
+        }
+      }
     }
+  }
   `;
   const variables = { slug };
   const data = await fetchGraphQL(query, variables);

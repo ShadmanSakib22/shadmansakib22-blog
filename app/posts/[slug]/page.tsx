@@ -12,35 +12,43 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// export async function generateMetadata({
-//   params,
-// }: PageProps): Promise<Metadata> {
-//   const { slug } = await params;
-//   const post = await getPost(slug);
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPost(slug);
 
-//   if (!post) {
-//     return {
-//       title: "Post Not Found",
-//     };
-//   }
+  if (!post) {
+    return {
+      title: "Post Not Found",
+    };
+  }
+  const fallbackTitle = post.title || "Untitled Post";
+  const fallbackDescription =
+    post.excerpt?.replace(/<[^>]*>/g, "").trim() || "No description provided.";
+  const seoData = post.seo;
 
-//   return {
-//     title: post.seo?.title || post.title,
-//     description:
-//       post.seo?.metaDesc || post.excerpt.replace(/<[^>]*>/g, "").trim(),
-//     openGraph: {
-//       title: post.seo?.opengraphTitle || post.title,
-//       description:
-//         post.seo?.metaDesc || post.excerpt.replace(/<[^>]*>/g, "").trim(),
-//       images: post.seo?.opengraphImage?.sourceUrl
-//         ? [{ url: post.seo.opengraphImage.sourceUrl }]
-//         : [],
-//     },
-//     twitter: {
-//       title: post.seo?.twitterTitle || post.title,
-//     },
-//   };
-// }
+  // Use the main SEO title and description as the fallback for OpenGraph
+  const ogTitle = seoData?.title || fallbackTitle;
+  const ogDescription =
+    seoData?.opengraphDescription || seoData?.metaDesc || fallbackDescription;
+
+  return {
+    // Primary Metadata (Google SERP)
+    title: seoData?.title || fallbackTitle,
+    description: seoData?.metaDesc || fallbackDescription,
+
+    // Open Graph (Social Sharing)
+    openGraph: {
+      title: ogTitle,
+      description: ogDescription,
+      // Images: Pulls the sourceUrl from the complex opengraphImage node
+      images: seoData?.opengraphImage?.sourceUrl
+        ? [{ url: seoData.opengraphImage.sourceUrl }]
+        : [],
+    },
+  };
+}
 
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
@@ -105,7 +113,6 @@ export default async function Page({ params }: PageProps) {
               sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover"
               priority
-              unoptimized
             />
           </div>
         )}
