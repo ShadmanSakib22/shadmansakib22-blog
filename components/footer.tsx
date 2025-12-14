@@ -25,19 +25,15 @@ const Footer = () => {
             </div>
             <nav className="flex gap-2 sm:hidden text-xs">
               <a
-                href=""
+                href="https://shadman-portfolio-2024.vercel.app/"
                 className="hover:underline underline-offset-4 px-2 border-l"
+                target="_blank"
               >
                 Portfolio
               </a>
               <a
-                href=""
-                className="hover:underline underline-offset-4 px-2 border-l"
-              >
-                RSS
-              </a>
-              <a
-                href=""
+                href="/sitemap.xml"
+                target="_blank"
                 className="hover:underline underline-offset-4 px-2 border-l"
               >
                 Sitemap
@@ -48,17 +44,16 @@ const Footer = () => {
         <hr />
         <div className="flex flex-col sm:flex-row  justify-between items-center gap-4 pt-4 pb-2 text-sm">
           <nav className="hidden sm:flex gap-4">
-            <a href="" className="hover:underline underline-offset-4">
+            <a
+              href="https://shadman-portfolio-2024.vercel.app/"
+              className="hover:underline underline-offset-4"
+              target="_blank"
+            >
               Portfolio
             </a>
             <a
-              href=""
-              className="hover:underline underline-offset-4 px-2 border-l"
-            >
-              RSS
-            </a>
-            <a
-              href=""
+              href="/sitemap.xml"
+              target="_blank"
               className="hover:underline underline-offset-4 px-2 border-l"
             >
               Sitemap

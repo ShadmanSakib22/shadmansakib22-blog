@@ -65,3 +65,9 @@ export interface PostListResponse {
   posts: Post[];
   pageInfo: PageInfo;
 }
+
+export interface SitemapItem {
+  slug: string;
+  modified: string;
+  type: "post" | "page" | "category";
+}

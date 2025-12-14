@@ -1,6 +1,6 @@
 // @lib/queries.ts
 
-import { Category, Post, PostListResponse } from "@/lib/types";
+import { Category, Post, PostListResponse, SitemapItem } from "@/lib/types";
 
 if (!process.env.NEXT_PUBLIC_WORDPRESS_GRAPHQL_ENDPOINT) {
   throw new Error(
@@ -163,4 +163,65 @@ export async function getPost(slug: string): Promise<Post | null> {
   const variables = { slug };
   const data = await fetchGraphQL(query, variables);
   return data.data.post || null;
+}
+
+export async function getSitemapData(): Promise<SitemapItem[]> {
+  try {
+    const query = `
+      query GetSitemapData {
+        posts(first: 1000, where: { status: PUBLISH }) {
+          nodes {
+            slug
+            modified
+          }
+        }
+        pages(first: 1000, where: { status: PUBLISH }) {
+          nodes {
+            slug
+            modified
+          }
+        }
+        categories {
+          nodes {
+            slug
+          }
+        }
+      }
+    `;
+
+    const data = await fetchGraphQL(query);
+
+    if (!data.data) {
+      throw new Error("No data received from GraphQL query");
+    }
+
+    const posts: SitemapItem[] = data.data.posts.nodes.map(
+      (node: { slug: string; modified: string }) => ({
+        slug: node.slug,
+        modified: node.modified,
+        type: "post",
+      })
+    );
+
+    const pages: SitemapItem[] = data.data.pages.nodes.map(
+      (node: { slug: string; modified: string }) => ({
+        slug: node.slug,
+        modified: node.modified,
+        type: "page",
+      })
+    );
+
+    const categories: SitemapItem[] = data.data.categories.nodes.map(
+      (node: { slug: string }) => ({
+        slug: node.slug,
+        modified: new Date().toISOString(),
+        type: "category",
+      })
+    );
+
+    return [...posts, ...pages, ...categories];
+  } catch (error) {
+    console.error("Error fetching sitemap data:", error);
+    throw error;
+  }
 }
