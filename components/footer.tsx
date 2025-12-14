@@ -1,32 +1,13 @@
-import { Facebook, Github, Linkedin, Send } from "lucide-react";
-import { Button } from "./ui/button";
-import ButtonInput from "./ui/button-input";
+import { Facebook, Github, Linkedin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { NewsletterForm } from "@/components/newsletter-form";
 
 const Footer = () => {
   return (
     <footer className="bg-background text-foreground border-t">
       <div className="container">
         <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 py-4">
-          <section className="space-y-1">
-            <h4 className="font-semibold">Subscribe to Newsletter</h4>
-            <p className="text-xs mb-2">
-              Get notified when I publish something new
-            </p>
-            <ButtonInput className="max-w-[300px]">
-              <input
-                type="email"
-                data-slot="input"
-                className="focus:outline-none ring-0 border-0 px-2 py-1 w-full"
-                placeholder="email@example.com"
-              />
-              <Button
-                variant={"outline"}
-                className="border-0 border-l text-primary rounded-none ml-auto"
-              >
-                <Send />
-              </Button>
-            </ButtonInput>
-          </section>
+          <NewsletterForm />
           <section className="flex gap-4 items-end justify-between">
             <div className="space-y-1">
               <h4 className="font-semibold">Social Media</h4>
