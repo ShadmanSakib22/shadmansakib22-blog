@@ -12,15 +12,27 @@ const Footer = () => {
             <div className="space-y-1">
               <h4 className="font-semibold">Social Media</h4>
               <div className="flex gap-2">
-                <Button variant={"outline"} size={"icon-sm"}>
-                  <Github />
-                </Button>
-                <Button variant={"outline"} size={"icon-sm"}>
-                  <Linkedin />
-                </Button>
-                <Button variant={"outline"} size={"icon-sm"}>
-                  <Facebook />
-                </Button>
+                <a href="https://github.com/ShadmanSakib22" target="_blank">
+                  <Button variant={"outline"} size={"icon-sm"}>
+                    <Github />
+                  </Button>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/shadmansakib22/"
+                  target="_blank"
+                >
+                  <Button variant={"outline"} size={"icon-sm"}>
+                    <Linkedin />
+                  </Button>
+                </a>
+                <a
+                  href="https://www.facebook.com/sadman.sakib.114908"
+                  target="_blank"
+                >
+                  <Button variant={"outline"} size={"icon-sm"}>
+                    <Facebook />
+                  </Button>
+                </a>
               </div>
             </div>
             <nav className="flex gap-2 sm:hidden text-xs">
