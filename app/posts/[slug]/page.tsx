@@ -144,6 +144,7 @@ export default async function Page({ params }: PageProps) {
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
                 priority
+                unoptimized
               />
             </div>
           )}
